@@ -8,8 +8,8 @@ public class FullTimeTeacher extends Teacher implements PayRoll
 
 
 
-    public FullTimeTeacher(String firstName, String lastName, int age, String gender, String address, String specialty, String degree, Boolean isFullTime) {
-        super(firstName, lastName, age, gender, address, specialty, degree, isFullTime);
+    public FullTimeTeacher(String firstName, String lastName, int age, String gender, String address, String departmentId, String specialty, String degree, Boolean isFullTime) {
+        super(firstName, lastName, age, gender, address, departmentId, specialty, degree, isFullTime);
 
     }
 

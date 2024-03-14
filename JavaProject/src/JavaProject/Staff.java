@@ -4,8 +4,8 @@ public class Staff extends Person {
     private String duty;
     private int workload;
 
-    public Staff(String firstName, String lastName, int age, String gender, String address, String duty, int workload) {
-        super(firstName, lastName, age, gender, address);
+    public Staff(String firstName, String lastName, int age, String gender, String address,String departmentId, String duty, int workload) {
+        super(firstName, lastName, age, gender, address, departmentId);
         this.duty = duty;
         this.workload = workload;
     }

@@ -7,15 +7,16 @@ public abstract class Person
     private int age;
     private String gender;
     private String address;
+    protected String departmentId;
 
-
-    public Person(String firstName, String lastName, int age, String gender, String address)
+    public Person(String firstName, String lastName, int age, String gender, String address, String departmentId)
     {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.gender = gender;
         this. address = address;
+        this.departmentId = departmentId;
     }
 
 
@@ -65,7 +66,14 @@ public abstract class Person
         return address;
     }
 
+    public void setDepartmentId(String departmentId)
+    {
+        this.departmentId = departmentId;
+    }
 
+    public String getDepartmentId() {
+        return departmentId;
+    }
 
     public abstract String getCategory();
 
@@ -77,6 +85,7 @@ public abstract class Person
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
                 ", address='" + address + '\'' +
+                ", department='" + departmentId + '\'' +
                 '}';
     }
 
@@ -97,7 +106,8 @@ public abstract class Person
                 firstName.equals(person.firstName) &&
                 lastName.equals(person.lastName) &&
                 gender.equals(person.gender) &&
-                address.equals(person.address);
+                address.equals(person.address) &&
+                departmentId.equals(person.departmentId);
 
     }
 

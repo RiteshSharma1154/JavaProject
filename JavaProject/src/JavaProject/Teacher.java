@@ -6,8 +6,8 @@ public class Teacher extends Person
     private String degree;
     private boolean isFullTime;
 
-    public Teacher(String firstName, String lastName, int age, String gender, String address, String specialty, String degree, Boolean isFullTime) {
-        super(firstName, lastName, age, gender, address);
+    public Teacher(String firstName, String lastName, int age, String gender, String address, String departmentId, String specialty, String degree, Boolean isFullTime) {
+        super(firstName, lastName, age, gender, address, departmentId);
         this.specialty = specialty;
         this.degree = degree;
         this.isFullTime = isFullTime;
