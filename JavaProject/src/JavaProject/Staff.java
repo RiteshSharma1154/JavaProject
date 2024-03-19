@@ -33,11 +33,11 @@ public class Staff extends Person {
     }
 
     public String toString() {
-        return "Staff{" +
-                "duty='" + duty + '\'' +
-                ", workload=" + workload +
-                super.toString() +
-                '}';
+        return "Staff Details : [" + " "+
+                super.toString()+ "," + " "+
+                "Duty :" + duty + "," + " "+
+                "Workload :" + workload + " "+
+                "]";
     }
 
     public boolean equals(Object obj) {

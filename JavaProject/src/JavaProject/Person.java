@@ -79,14 +79,13 @@ public abstract class Person
 
 
     public String toString() {
-        return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                ", gender='" + gender + '\'' +
-                ", address='" + address + '\'' +
-                ", department='" + departmentId + '\'' +
-                '}';
+        return
+                "First Name :" + firstName + "," + " "+
+                "Last Name :" + lastName + "," + " "+
+                "Age :" + age + "," + " "+
+                ",Gender : " + gender + "," + " "+
+                "Address : " + address + "," + " "+
+                "Department :" + departmentId  + " ";
     }
 
     public boolean equals(Object obj)

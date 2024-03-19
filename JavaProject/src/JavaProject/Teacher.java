@@ -55,12 +55,13 @@ public class Teacher extends Person
     }
 
     public String toString() {
-        return "Teacher{" +
-                "specialty='" + specialty + '\'' +
-                ", degree='" + degree + '\'' +
-                ", isFullTime=" + isFullTime +
-                super.toString() +
-                '}';
+        return
+                "Teacher Details : [" + " "+
+                super.toString() + "," +
+                "Specialty :" + specialty + "," + " "+
+                "Degree : " + degree + "," + " "+
+                "Full Time :" + isFullTime + " "+
+                "]";
     }
 
     public boolean equals(Object obj) {
