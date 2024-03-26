@@ -1,6 +1,6 @@
 package JavaProject;
 
-public class Staff extends Person {
+public class Staff extends Person implements  PayRoll {
     private String duty;
     private int workload;
 
@@ -33,13 +33,12 @@ public class Staff extends Person {
     }
 
     public String toString() {
-        return "Staff Details : [" + " "+
-                super.toString()+ "," + " "+
-                "Duty :" + duty + "," + " "+
-                "Workload :" + workload + " "+
-                "]";
+        return "Staff Details: [" +
+                super.toString() + ", " +
+                "Duty: " + duty + ", " +
+                "Workload (hours/week): " + workload + ", " +
+                "Salary: $" + ComputePayRoll() + "]";
     }
-
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -53,5 +52,16 @@ public class Staff extends Person {
         Staff staff = (Staff) obj;
         return workload == staff.workload &&
                 duty.equals(staff.duty);
+    }
+
+    public double ComputePayRoll() {
+        // Maximum number of hours a staff member can work in a week
+        int MAX_HOURS_PER_WEEK = 40;
+
+        // Calculate workload based on maximum hours per week
+        double workload = Math.min(MAX_HOURS_PER_WEEK, this.workload);
+
+        // Calculate salary using the provided formula
+        return (workload * 32 * 2) * 0.75;
     }
 }

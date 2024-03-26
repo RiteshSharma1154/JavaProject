@@ -1,11 +1,13 @@
 package JavaProject;
 
+import javax.swing.*;
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Department {
+public class Department extends JFrame {
     private String id;
     private List<Teacher> teachers;
     private List<Staff> staff;
@@ -15,12 +17,17 @@ public class Department {
         this.teachers = new ArrayList<>();
         this.staff = new ArrayList<>();
     }
+
+
     //Display Teacher Details from the file
     public void loadteacherdetails() {
         String filename = "/Users/riteshsharma/Desktop/Teacher Details.txt";
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
                 System.out.println("Line read from file: " + line);
                 String[] parts = line.split(",");
                 if (parts.length >= 6) { // Ensure minimum required number of elements
@@ -35,7 +42,9 @@ public class Department {
                         String specialty = parts[6].substring(parts[6].indexOf(":") + 2);
                         String degree = parts[7].substring(parts[7].indexOf(":") + 2);
                         boolean isFullTime = Boolean.parseBoolean(parts[8].substring(parts[8].indexOf(":") + 2));
-                        Teacher teacher = new Teacher(firstName, lastName, age, address, gender, departmentId, specialty, degree, isFullTime);
+                        boolean isPartTime = Boolean.parseBoolean(parts[9].substring(parts[9].indexOf(":") + 2).trim());
+                        int hoursWorked = Integer.parseInt(parts[10].substring(parts[10].indexOf(":") + 2).trim());
+                        Teacher teacher = new Teacher(firstName, lastName, age, address, gender, departmentId, specialty, degree, isFullTime,isPartTime,hoursWorked);
                         teachers.add(teacher);
 
                     }
@@ -77,14 +86,24 @@ public class Department {
             String address = inputScanner.nextLine();
             System.out.print("Department ID: ");
             String departmentId = inputScanner.nextLine();
-            //System.out.println(departmentIdExists(reader, departmentId));
+            System.out.print("Specialty: ");
+            String specialty = inputScanner.nextLine();
+            System.out.print("Degree: ");
+            String degree = inputScanner.nextLine();
+            System.out.print("Is Full Time (true/false): ");
+            boolean isFullTime = Boolean.parseBoolean(inputScanner.nextLine());
+            System.out.println("Is Part Time (true/false): ");
+            boolean isPartTIme = Boolean.parseBoolean(inputScanner.nextLine());
+            System.out.println("Hours Worked: ");
+            int hoursWorked = Integer.parseInt(inputScanner.nextLine());
+
 
             if (departmentIdExists(reader, departmentId)) {
                 throw new IllegalArgumentException("Department ID already exists.");
             }
 
             // Now, we'll call another method to write the data to the file
-            writeTeacherToFile(writeFileName, firstName, lastName, age, gender, address, departmentId);
+            writeTeacherToFile(writeFileName, firstName, lastName, age, gender, address, departmentId, specialty, degree, isFullTime,isPartTIme,hoursWorked);
 
         } catch (IOException e) {
             System.out.println("Error reading from the file: " + e.getMessage());
@@ -93,33 +112,11 @@ public class Department {
         }
     }
 
-    public boolean departmentIdExists(BufferedReader reader, String departmentId) throws IOException {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            System.out.println("Line read from file: " + line);
-            String[] parts = line.split(",");
-            if (parts.length >= 7) {
-                String idFromFile = parts[6].substring(parts[6].indexOf(":") + 1); // Assuming department ID is at index 5
-                System.out.println("ID from file: " + idFromFile);
-                if (idFromFile.equals(departmentId)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
-    private void writeTeacherToFile(String fileName, String firstName, String lastName, int age, String gender, String address, String departmentId) {
+    private void writeTeacherToFile(String fileName, String firstName, String lastName, int age, String gender, String address, String departmentId, String specialty, String degree, boolean isFullTime,boolean isPartTime,int hoursWorked) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Specialty: ");
-            String specialty = scanner.nextLine();
-            System.out.print("Degree: ");
-            String degree = scanner.nextLine();
-            System.out.print("Is Full Time (true/false): ");
-            boolean isFullTime = Boolean.parseBoolean(scanner.nextLine());
 
-            Teacher teacher = new Teacher(firstName, lastName, age, address, gender, departmentId, specialty, degree, isFullTime);
+            Teacher teacher = new Teacher(firstName, lastName, age, address, gender, departmentId, specialty, degree, isFullTime,isPartTime,hoursWorked);
             System.out.println(teacher.toString());
             writer.write(teacher.toString());
             writer.newLine();
@@ -144,6 +141,9 @@ public class Department {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
                 System.out.println("Line read from file: " + line);
                 String[] parts = line.split(",");
                 if (parts.length >= 6) { // Ensure minimum required number of elements
@@ -191,15 +191,19 @@ public class Department {
             String address = scanner.nextLine();
             System.out.print("Department ID: ");
             String departmentId = scanner.nextLine();
+            System.out.print("Duty: ");
+            String duty = scanner.nextLine();
+            System.out.print("Workload: ");
+            int workload = Integer.parseInt(scanner.nextLine());
 
 
             try (BufferedReader reader = new BufferedReader(new FileReader(writeFileName))) {
-                if (departmentIdExistsInStaff(reader, departmentId)) {
+                if (departmentIdExists(reader, departmentId)) {
                     throw new IllegalArgumentException("Department ID already exists.");
                 }
             }
 
-            writeStaffToFile(writeFileName, firstName, lastName, age, gender, address, departmentId);
+            writeStaffToFile(writeFileName, firstName, lastName, age, gender, address, departmentId, duty, workload);
         } catch (IOException e) {
             System.out.println("Error writing to the file: " + e.getMessage());
         } catch (NumberFormatException e) {
@@ -207,31 +211,9 @@ public class Department {
         }
     }
 
-    public boolean departmentIdExistsInStaff(BufferedReader reader, String departmentId) throws IOException {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            System.out.println("Line read from file: " + line);
-            String[] parts = line.split(",");
-            if (parts.length >= 7) {
-                String idFromFile = parts[6].substring(parts[6].indexOf(":") + 1);// Assuming department ID is at index 5
-                System.out.println("THIS IS THE = "+idFromFile);
-
-                System.out.println("ID from file: " + idFromFile);
-                if (idFromFile.equals(departmentId)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private void writeStaffToFile(String fileName, String firstName, String lastName, int age, String gender, String address, String departmentId) {
+    private void writeStaffToFile(String fileName, String firstName, String lastName, int age, String gender, String address, String departmentId,String duty, int workload) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Duty: ");
-            String duty = scanner.nextLine();
-            System.out.print("Workload: ");
-            int workload = Integer.parseInt(scanner.nextLine());
+
             Staff staff = new Staff(firstName, lastName, age, gender, address, departmentId, duty, workload);
             System.out.println(staff.toString());
             writer.write(staff.toString());
@@ -244,16 +226,35 @@ public class Department {
     }
 
 
+    public boolean departmentIdExists(BufferedReader reader, String departmentId) throws IOException {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println("Line read from file: " + line);
+            String[] parts = line.split(",");
+            if (parts.length >= 7) {
+                String idFromFile = parts[6].substring(parts[6].indexOf(":") + 1);// Assuming department ID is at index 5
+               // System.out.println("THIS IS THE = "+idFromFile);
+
+               // System.out.println("ID from file: " + idFromFile);
+                if (idFromFile.equals(departmentId)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
 
 
 
     public static void main(String[] args) {
         Department test2 = new Department("IT");
-        //test2.loadteacherdetails();
+        test2.loadteacherdetails();
         //test2.loadstaffdetails();
-        //test2.writeDataToTeachersFile();
-        test2.loadstaffdetails();
-        test2.writeDataToStaffFile();
+        test2.writeDataToTeachersFile();
+        // test2.loadstaffdetails();
+        // test2.writeDataToStaffFile();
 
     }
 }
