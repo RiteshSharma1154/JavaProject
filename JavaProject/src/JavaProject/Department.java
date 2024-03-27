@@ -44,27 +44,20 @@ public class Department extends JFrame {
                         boolean isFullTime = Boolean.parseBoolean(parts[8].substring(parts[8].indexOf(":") + 2));
                         boolean isPartTime = Boolean.parseBoolean(parts[9].substring(parts[9].indexOf(":") + 2).trim());
                         int hoursWorked = Integer.parseInt(parts[10].substring(parts[10].indexOf(":") + 2).trim());
-                        Teacher teacher = new Teacher(firstName, lastName, age, address, gender, departmentId, specialty, degree, isFullTime,isPartTime,hoursWorked);
+                        Teacher teacher = new Teacher(firstName, lastName, age, address, gender, departmentId, specialty, degree, isFullTime, isPartTime, hoursWorked);
                         teachers.add(teacher);
 
                     }
-                }
-                else
-                {
+                } else {
                     System.out.println("Invalid data format: " + line);
                 }
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());
-        }
-        catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             System.out.println("Error parsing integer: " + e.getMessage());
         }
     }
-
 
 
     //Write data to Teacher File
@@ -103,7 +96,7 @@ public class Department extends JFrame {
             }
 
             // Now, we'll call another method to write the data to the file
-            writeTeacherToFile(writeFileName, firstName, lastName, age, gender, address, departmentId, specialty, degree, isFullTime,isPartTIme,hoursWorked);
+            writeTeacherToFile(writeFileName, firstName, lastName, age, gender, address, departmentId, specialty, degree, isFullTime, isPartTIme, hoursWorked);
 
         } catch (IOException e) {
             System.out.println("Error reading from the file: " + e.getMessage());
@@ -113,10 +106,10 @@ public class Department extends JFrame {
     }
 
 
-    private void writeTeacherToFile(String fileName, String firstName, String lastName, int age, String gender, String address, String departmentId, String specialty, String degree, boolean isFullTime,boolean isPartTime,int hoursWorked) {
+    private void writeTeacherToFile(String fileName, String firstName, String lastName, int age, String gender, String address, String departmentId, String specialty, String degree, boolean isFullTime, boolean isPartTime, int hoursWorked) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
 
-            Teacher teacher = new Teacher(firstName, lastName, age, address, gender, departmentId, specialty, degree, isFullTime,isPartTime,hoursWorked);
+            Teacher teacher = new Teacher(firstName, lastName, age, address, gender, departmentId, specialty, degree, isFullTime, isPartTime, hoursWorked);
             System.out.println(teacher.toString());
             writer.write(teacher.toString());
             writer.newLine();
@@ -126,13 +119,6 @@ public class Department extends JFrame {
             System.out.println("Error writing to the file: " + e.getMessage());
         }
     }
-
-
-
-
-
-
-
 
 
     //Display Staff Details from the file
@@ -211,7 +197,7 @@ public class Department extends JFrame {
         }
     }
 
-    private void writeStaffToFile(String fileName, String firstName, String lastName, int age, String gender, String address, String departmentId,String duty, int workload) {
+    private void writeStaffToFile(String fileName, String firstName, String lastName, int age, String gender, String address, String departmentId, String duty, int workload) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
 
             Staff staff = new Staff(firstName, lastName, age, gender, address, departmentId, duty, workload);
@@ -233,9 +219,9 @@ public class Department extends JFrame {
             String[] parts = line.split(",");
             if (parts.length >= 7) {
                 String idFromFile = parts[6].substring(parts[6].indexOf(":") + 1);// Assuming department ID is at index 5
-               // System.out.println("THIS IS THE = "+idFromFile);
+                // System.out.println("THIS IS THE = "+idFromFile);
 
-               // System.out.println("ID from file: " + idFromFile);
+                // System.out.println("ID from file: " + idFromFile);
                 if (idFromFile.equals(departmentId)) {
                     return true;
                 }
@@ -245,13 +231,10 @@ public class Department extends JFrame {
     }
 
 
-
-
-
     public static void main(String[] args) {
         Department test2 = new Department("IT");
-        test2.loadteacherdetails();
-        //test2.loadstaffdetails();
+        //test2.loadteacherdetails();
+        test2.loadstaffdetails();
         test2.writeDataToTeachersFile();
         // test2.loadstaffdetails();
         // test2.writeDataToStaffFile();
