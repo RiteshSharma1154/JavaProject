@@ -86,7 +86,7 @@ public class Department extends JFrame {
             System.out.print("Is Full Time (true/false): ");
             boolean isFullTime = Boolean.parseBoolean(inputScanner.nextLine());
             System.out.println("Is Part Time (true/false): ");
-            boolean isPartTIme = Boolean.parseBoolean(inputScanner.nextLine());
+            boolean isPartTime = Boolean.parseBoolean(inputScanner.nextLine());
             System.out.println("Hours Worked: ");
             int hoursWorked = Integer.parseInt(inputScanner.nextLine());
 
@@ -96,7 +96,7 @@ public class Department extends JFrame {
             }
 
             // Now, we'll call another method to write the data to the file
-            writeTeacherToFile(writeFileName, firstName, lastName, age, gender, address, departmentId, specialty, degree, isFullTime, isPartTIme, hoursWorked);
+            writeTeacherToFile(writeFileName, firstName, lastName, age, gender, address, departmentId, specialty, degree, isFullTime, isPartTime, hoursWorked);
 
         } catch (IOException e) {
             System.out.println("Error reading from the file: " + e.getMessage());
@@ -106,7 +106,7 @@ public class Department extends JFrame {
     }
 
 
-    private void writeTeacherToFile(String fileName, String firstName, String lastName, int age, String gender, String address, String departmentId, String specialty, String degree, boolean isFullTime, boolean isPartTime, int hoursWorked) {
+    public void writeTeacherToFile(String fileName, String firstName, String lastName, int age, String gender, String address, String departmentId, String specialty, String degree, boolean isFullTime, boolean isPartTime, int hoursWorked) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
 
             Teacher teacher = new Teacher(firstName, lastName, age, address, gender, departmentId, specialty, degree, isFullTime, isPartTime, hoursWorked);
@@ -197,7 +197,7 @@ public class Department extends JFrame {
         }
     }
 
-    private void writeStaffToFile(String fileName, String firstName, String lastName, int age, String gender, String address, String departmentId, String duty, int workload) {
+    void writeStaffToFile(String fileName, String firstName, String lastName, int age, String gender, String address, String departmentId, String duty, int workload) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
 
             Staff staff = new Staff(firstName, lastName, age, gender, address, departmentId, duty, workload);

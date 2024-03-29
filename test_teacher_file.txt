@@ -1,0 +1,1 @@
+Teacher Details: [First Name :John, Last Name :Doe, Age :30, ,Gender : 123 Main Street, Address : Male, Department :IT , Specialty: Computer Science, Degree: PhD, Full Time: true, Salary (Full-Time PhD): $6092.8]
