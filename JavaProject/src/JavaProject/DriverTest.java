@@ -47,7 +47,6 @@ public class DriverTest {
     }
 
 
-
     @Test
     void testWriteStaffToFile() {
         Department department = new Department("IT");
@@ -82,17 +81,13 @@ public class DriverTest {
     }
 
 
-
-
-
-
     @Test
     public void testComputePayRollForFullTimeTeacher() {
         // Create a full-time teacher object with a PhD degree
         Teacher teacher = new Teacher("John", "Doe", 35, "123 Main St", "Male", "IT", "Math", "PhD", true, false, 40);
 
-        // Compute expected payroll based on the provided logic
-        double expectedPayroll = computeExpectedPayrollForFullTimeTeacher(teacher);
+        // Hard code expected payroll value for full-time teacher with a PhD degree
+        double expectedPayroll = 32 * 112 * 2 * 0.85;
 
         // Calculate actual payroll using the method under test
         double actualPayroll = teacher.ComputePayRoll();
@@ -106,54 +101,13 @@ public class DriverTest {
         // Create a part-time teacher object with a Bachelor degree
         Teacher teacher = new Teacher("Jane", "Smith", 28, "456 Elm St", "Female", "IT", "Physics", "Bachelor", false, true, 20);
 
-        // Compute expected payroll based on the provided logic
-        double expectedPayroll = computeExpectedPayrollForPartTimeTeacher(teacher);
+        // Hard code expected payroll value for part-time teacher with a Bachelor degree
+        double expectedPayroll = 20 * 42 * 2 * 0.76;
 
         // Calculate actual payroll using the method under test
         double actualPayroll = teacher.ComputePayRoll();
 
         // Assert that the actual payroll matches the expected payroll
         assertEquals(expectedPayroll, actualPayroll, "Payroll calculation for part-time teacher is incorrect");
-    }
-
-    // Helper method to calculate expected payroll for a full-time teacher
-    private double computeExpectedPayrollForFullTimeTeacher(Teacher teacher) {
-        double DEGREE_RATE_PHD = 112;
-        double DEGREE_RATE_MASTER = 82;
-        double DEGREE_RATE_BACHELOR = 42;
-        double degreeRate = 0;
-
-        // Determine degree rate based on teacher's degree
-        if ("PhD".equals(teacher.getDegree())) {
-            degreeRate = DEGREE_RATE_PHD;
-        } else if ("Master".equals(teacher.getDegree())) {
-            degreeRate = DEGREE_RATE_MASTER;
-        } else if ("Bachelor".equals(teacher.getDegree())) {
-            degreeRate = DEGREE_RATE_BACHELOR;
-        }
-
-        // Calculate expected payroll for full-time teacher
-        return (32 * degreeRate * 2) * 0.85;
-    }
-
-    // Helper method to calculate expected payroll for a part-time teacher
-    private double computeExpectedPayrollForPartTimeTeacher(Teacher teacher) {
-        double DEGREE_RATE_PHD = 112;
-        double DEGREE_RATE_MASTER = 82;
-        double DEGREE_RATE_BACHELOR = 42;
-        double degreeRate = 0;
-        int hoursWorked = 20;
-
-        // Determine degree rate based on teacher's degree
-        if ("PhD".equals(teacher.getDegree())) {
-            degreeRate = DEGREE_RATE_PHD;
-        } else if ("Master".equals(teacher.getDegree())) {
-            degreeRate = DEGREE_RATE_MASTER;
-        } else if ("Bachelor".equals(teacher.getDegree())) {
-            degreeRate = DEGREE_RATE_BACHELOR;
-        }
-
-        // Calculate expected payroll for part-time teacher
-        return (hoursWorked * degreeRate * 2) * 0.76;
     }
 }
